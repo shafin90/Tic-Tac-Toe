@@ -1,10 +1,20 @@
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.title {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
 #tic-tac-toe-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     width: 300px;
     margin: 0 auto;
-    margin-top: 50px;
 }
 
 .cell {
