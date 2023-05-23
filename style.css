@@ -1,6 +1,7 @@
 .container {
     text-align: center;
     margin-top: 50px;
+    perspective: 800px;
 }
 
 .title {
@@ -15,6 +16,7 @@
     grid-gap: 10px;
     width: 300px;
     margin: 0 auto;
+    perspective: inherit; /* Inherit the perspective from the parent container */
 }
 
 .cell {
@@ -29,24 +31,51 @@
     color: #333;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
+    transition: transform 0.3s;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    position: relative;
+}
+
+.cell::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateZ(-5px);
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 .cell:hover {
     background-color: #f1f1f1;
+    transform: rotateY(15deg) scale(1.05);
+}
+
+.cell:hover::before {
+    opacity: 1;
 }
 
 .X {
     color: #f44336;
+    transform: rotateY(180deg);
 }
 
 .O {
     color: #2196f3;
+    transform: rotateX(180deg);
+}
+
+.button-container {
+    margin-top: 20px;
 }
 
 button {
-    display: block;
-    margin: 20px auto;
+    display: inline-block;
+    margin: 10px;
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
@@ -59,4 +88,70 @@ button {
 
 button:hover {
     background-color: #555;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(45deg, #3f51b5, #2196f3);
+    overflow: hidden;
+}
+
+.cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%) rotateX(45deg) rotateY(45deg);
+    animation: rotate 20s linear infinite;
+}
+
+.cube-face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.cube-face.front {
+    transform: translateZ(100px);
+}
+
+.cube-face.back {
+    transform: translateZ(-100px) rotateY(180deg);
+}
+
+/* Media Queries */
+
+@media (max-width: 480px) {
+    /* Adjustments for mobile devices */
+
+    .container {
+        margin-top: 30px;
+    }
+
+    #tic-tac-toe-board {
+        width: 200px;
+    }
+
+    .cell {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .title {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        margin: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
 }
